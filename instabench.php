@@ -36,9 +36,9 @@ class InstaBench {
     public function run() {
         foreach($this->members as $func):
             $this->start();
-            for($i = 0; $i < $this->iterations; $i++):
+            for($i = 0; $i < $this->iterations; $i++)
                 call_user_func_array($func[0], $func[1]);
-            endfor;
+
             array_push($this->results, $this->stop());
         endforeach;
     }
@@ -79,7 +79,7 @@ class InstaBench {
 
     private function get_max_width($row) {
         $length = strlen($row[0]);
-        $this->width < $length ? $this->width = $length : null;
+        $this->width = max($this->width, $length);
     }
 
     private function start() {
