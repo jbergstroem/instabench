@@ -12,7 +12,7 @@ $benchmark->add("var_export", array($data, true));
 try {
     $benchmark->run();
 } catch(InstaBenchException $e) {
-    printf("Something went wrong: %s", $e->getMessage());
+    exit(sprintf("Something went wrong: %s", $e->getMessage()));
 }
 
 // Everything went ok, lets view the results!
