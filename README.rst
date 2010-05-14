@@ -23,9 +23,9 @@ Simple example that compares a couple of serialization options in PHP::
   $benchmark->add("var_export", array($data, true));
 
   try {
-    $benchmark->run();
+      $benchmark->run();
   } catch(InstaBenchException $e) {
-    printf("Something went wrong: %s", $e->getMessage());
+      printf("Something went wrong: %s", $e->getMessage());
   }
 
   // Everything went ok, lets view the results!
