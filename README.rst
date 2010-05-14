@@ -31,3 +31,16 @@ Simple example that compares a couple of serialization options in PHP::
   // Everything went ok, lets view the results!
   $benchmark->results();
 
+Example output
+--------------
+Here's an example from running the bundled test.php on my MBP::
+
+  % instabench # php test.php
+  InstaBench 0.1
+
+  Benchmarking results (100000 iterations)
+  ========================================
+      serialize: 662ms (baseline)
+    json_encode: 264ms (2.5x faster)
+     var_export: 830ms (0.8x slower)
+
