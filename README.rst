@@ -36,7 +36,7 @@ Example output
 Here's an example from running the bundled test.php on my MBP::
 
   % instabench # php test.php
-  InstaBench 0.1
+  InstaBench 0.1 (PHP 5.3.1)
 
   Benchmarking results (100000 iterations)
   ========================================

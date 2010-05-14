@@ -45,7 +45,7 @@ class InstaBench {
 
     public function results() {
         $output = array(
-          sprintf("InstaBench %s\n", self::VERSION),
+          sprintf("InstaBench %s (PHP %s)\n", self::VERSION, phpversion()),
           sprintf("Benchmarking results (%s iterations)", $this->iterations),
         );
         array_push($output, str_repeat("=", strlen($output[1])));
