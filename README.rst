@@ -33,14 +33,16 @@ Simple example that compares a couple of serialization options in PHP::
 
 Example output
 --------------
-Here's an example from running the bundled test.php on my MBP::
+Here's an example from running the bundled test.php on a test setup::
 
   % instabench # php test.php
-  InstaBench 0.1 (PHP 5.3.1)
+  InstaBench 0.1 (PHP 5.2.13-pl0-gentoo)
 
-  Benchmarking results (100000 iterations)
-  ========================================
-      serialize: 662ms (baseline)
-    json_encode: 264ms (2.5x faster)
-     var_export: 830ms (0.8x slower)
+  Benchmarking results (10000 iterations)
+  =======================================
+             serialize: 1057ms (baseline)
+            var_export: 1941ms (0.5x slower)
+    igbinary_serialize: 483ms (2.2x faster)
+           bson_encode: 381ms (2.8x faster)
+           json_encode: 716ms (1.5x faster)
 
