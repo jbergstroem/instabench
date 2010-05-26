@@ -19,17 +19,11 @@ Simple example that compares a couple of serialization options in PHP::
   $benchmark = new InstaBench();
 
   $benchmark->add("serialize", array($data));
-  $benchmark->add("json_encode", array($data));
   $benchmark->add("var_export", array($data, true));
 
-  try {
-      $benchmark->run();
-  } catch(InstaBenchException $e) {
-      exit(sprintf("Something went wrong: %s", $e->getMessage()));
-  }
-
-  // Everything went ok, lets view the results!
+  $benchmark->run();
   $benchmark->results();
+
 
 Example output
 --------------

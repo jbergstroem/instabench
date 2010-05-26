@@ -23,13 +23,7 @@ class InstaBench {
      * Note: Read up on how to format input: php.net/call_user_func_array
      */
     public function add($func, $args) {
-        try {
-            if(!@call_user_func_array($func, $args))
-                throw new InstaBenchException(
-                    sprintf("couldn't execute the function '%s'", $func));
-        } catch(InstaBenchException $e) {
-            exit(sprintf("Something went wrong, %s", $e->getMessage()));
-        }
+        call_user_func_array($func, $args);
         array_push($this->members, array($func, $args));
     }
 
@@ -100,5 +94,3 @@ class InstaBench {
         return $this->lap;
     }
 }
-
-class InstaBenchException extends Exception {}
