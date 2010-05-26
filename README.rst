@@ -33,10 +33,10 @@ Here's an example from running the bundled test.php on a test setup::
   InstaBench 0.1 (PHP 5.2.13-pl0-gentoo)
 
   Benchmarking results (10000 iterations)
-  =======================================
-             serialize: 1057ms (baseline)
-            var_export: 1941ms (0.5x slower)
-    igbinary_serialize: 483ms (2.2x faster)
-           bson_encode: 381ms (2.8x faster)
-           json_encode: 716ms (1.5x faster)
+  ==========================================
+            serialize: 1057ms (baseline)
+           var_export: 1941ms (0.5x slower)
+   igbinary_serialize: 483ms (2.2x faster)
+          bson_encode: 381ms (2.8x faster)
+          json_encode: 716ms (1.5x faster)
 

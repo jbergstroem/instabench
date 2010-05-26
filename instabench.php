@@ -41,14 +41,14 @@ class InstaBench {
         // Are we running this trough a browser?
         $browser = (bool) isset($_SERVER['SERVER_ADDR']);
 
-        $output = array(
-            sprintf("InstaBench %s (PHP %s)\n", self::VERSION, phpversion()),
-            sprintf("Benchmarking results (%s iterations)", $this->iterations),
-        );
-        array_push($output, str_repeat("=", strlen($output[1])));
-
         // Fetch max width so we can pad align
         array_walk($this->members, array('InstaBench', 'get_max_width'));
+
+        $output = array(
+            sprintf("InstaBench %s (PHP %s)\n", self::VERSION, phpversion()),
+            sprintf("Benchmarking results (%s iterations)", $this->iterations)
+        );
+        array_push($output, "===");
 
         /*
          * Add each result to array with proper padding and a comparision
@@ -56,7 +56,7 @@ class InstaBench {
          */
         for($i=0; $i < count($this->members); $i++):
             $factor = round(($this->results[0] / $this->results[$i]), 1);
-            $pad = 2 + ($this->width - strlen($this->members[$i][0]));
+            $pad = ($this->width - strlen($this->members[$i][0])) + 1;
             array_push($output, sprintf("%s%s: %sms (%s)",
                 str_repeat(" ", $pad),
                 $this->members[$i][0],
@@ -68,19 +68,20 @@ class InstaBench {
                 )
             ));
         endfor;
-        
-        // Cosmetic nit
+
+        // Cosmetics, re-use $this->width to figure out new console width
+        array_walk($output, array('InstaBench', 'get_max_width'));
+
+        $output[array_search("===", $output)] = str_repeat("=", $this->width);
         array_push($output, "\n");
 
-        if($browser):
-            header('Content-type: text/plain');
-        endif;
+        if($browser) header('Content-type: text/plain');
 
         print implode("\n", $output);
     }
 
     private function get_max_width($row) {
-        $length = strlen($row[0]);
+        $length = is_array($row) ? strlen($row[0]) : strlen($row);
         $this->width = max($this->width, $length);
     }
 
