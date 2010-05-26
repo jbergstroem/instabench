@@ -2,16 +2,16 @@
 require_once('instabench.php');
 
 $data = array(
-	'item_0' => array(array(1,2,3,4,5,6,7,8,9,0),array(1,2,3,4,5,6,7,8,9,0),array(1,2,3,4,5,6,7,8,9,0),),
-	'item_1' => array('a','b','c','d','e','f'),
-	'item_2' => array('a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f'),
-	'item_3' => array(1,2,3,4,5,6,7,8,9,0),
-	'item_4' => 'kjasdlkjhasdljfhasldkjhfasd98f70p9asjkfnasdfbas9y7fas',
-	'item_5' => '987123458796123976187916329847698761239847',
-	'item_6' => array(array(1,2,3,4,5,6,7,8,9,0),array(1,2,3,4,5,6,7,8,9,0),array(1,2,3,4,5,6,7,8,9,0),),
-	'item_7' => array(array(array('a','b','c','d','e','f'),array('a','b','c','d','e','f')),array(array(array('a','b','c','d','e','f'),array('a','b','c','d','e','f')),2,3,4,5,6,7,8,9,0),array(array(array('a','b','c','d','e','f'),array('a','b','c','d','e','f')),array(array('a','b','c','d','e','f'),array('a','b','c','d','e','f'))),),
-	'item_8' => array(array('a','b',array('a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f'),'d','e','f','a',array('a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f'),'c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f'),array('a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f')),
-	'item_9' => array('a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f'),
+    'item_0' => array(array(1,2,3,4,5,6,7,8,9,0),array(1,2,3,4,5,6,7,8,9,0),array(1,2,3,4,5,6,7,8,9,0),),
+    'item_1' => array('a','b','c','d','e','f'),
+    'item_2' => array('a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f'),
+    'item_3' => array(1,2,3,4,5,6,7,8,9,0),
+    'item_4' => 'kjasdlkjhasdljfhasldkjhfasd98f70p9asjkfnasdfbas9y7fas',
+    'item_5' => '987123458796123976187916329847698761239847',
+    'item_6' => array(array(1,2,3,4,5,6,7,8,9,0),array(1,2,3,4,5,6,7,8,9,0),array(1,2,3,4,5,6,7,8,9,0),),
+    'item_7' => array(array(array('a','b','c','d','e','f'),array('a','b','c','d','e','f')),array(array(array('a','b','c','d','e','f'),array('a','b','c','d','e','f')),2,3,4,5,6,7,8,9,0),array(array(array('a','b','c','d','e','f'),array('a','b','c','d','e','f')),array(array('a','b','c','d','e','f'),array('a','b','c','d','e','f'))),),
+    'item_8' => array(array('a','b',array('a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f'),'d','e','f','a',array('a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f'),'c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f'),array('a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f')),
+    'item_9' => array('a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f','a','b','c','d','e','f'),
 );
 
 $benchmark = new InstaBench(10000);
