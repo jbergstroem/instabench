@@ -9,6 +9,7 @@ class InstaBench {
     private $members = array();
     private $results = array();
     private $start;
+    private $mem_usage;
     private $lap;
     private $width = 0;
 
@@ -32,6 +33,7 @@ class InstaBench {
 
     public function run() {
         foreach($this->members as $func):
+            $this->mem_usage = memory_get_usage();
             $this->start();
             for($i = 0; $i < $this->iterations; $i++)
                 call_user_func_array($func[0], $func[1]);
@@ -53,15 +55,20 @@ class InstaBench {
         );
         array_push($output, "===");
 
+        // eaiser to write
+        $m = & $this->members;
+        $r = & $this->results;
+
         /*
          * Add each result to array with proper padding and a comparision
-         * against baseline (first function added)
+         * against baseline (first function added). Skip comparison if
+         * we only have one member.
          */
-        $num = count($this->members);
+        $num = count($m);
         for($i = 0; $i < $num; $i++):
-            $factor = round(($this->results[0] / $this->results[$i]), 1);
-            $pad = ($this->width - strlen($this->members[$i][0])) + 1;
-            $comparison = ($i == 0 ? "baseline" : sprintf("%.1fx %s",
+            $factor = @round(($r[0]['time'] / $r[$i]['time']), 1);
+            $pad = ($this->width - strlen($m[$i][0])) + 1;
+            $comparison = ($i == 0 ? 'baseline' : sprintf("%.1fx %s",
                 $factor,
                 $factor < 1 ? "slower" : ($factor === 1.0 ?
                     "equal" : "faster")
@@ -69,16 +76,36 @@ class InstaBench {
 
             array_push($output, sprintf("%s%s: %sms %s",
                 str_repeat(" ", $pad),
-                $this->members[$i][0],
-                $this->results[$i],
-                $num > 1 ? sprintf("(%s)",$comparison) : ""
+                $m[$i][0],
+                $r[$i]['time'],
+                $num > 1 ? sprintf("(%s)", $comparison) : ""
+            ));
+        endfor;
+
+        /*
+         * Add memory usage. No need to compare, they're
+         * easy enough to read.
+         */
+        array_push($output, "\n");
+        array_push($output, sprintf("Memory usage (total: %s)",
+            formatBytes(memory_get_usage()))
+        );
+        array_push($output, "===");
+
+        for($i = 0; $i < $num; $i++):
+            $pad = ($this->width - strlen($m[$i][0])) + 1;
+            array_push($output, sprintf("%s%s: %s",
+                str_repeat(" ", $pad),
+                $m[$i][0],
+                formatBytes($r[$i]["mem"])
             ));
         endfor;
 
         // Cosmetics, re-use $this->width to figure out new console width
         array_walk($output, array('InstaBench', 'get_max_width'));
 
-        $output[array_search("===", $output)] = str_repeat("=", $this->width);
+        foreach(array_keys($output, "===") as $key)
+            $output[$key] = str_repeat("=", $this->width);
         array_push($output, "\n");
 
         if($browser) header('Content-type: text/plain');
@@ -86,6 +113,7 @@ class InstaBench {
         print implode("\n", $output);
     }
 
+    // Helper for figuring out width
     private function get_max_width($row) {
         $length = is_array($row) ? strlen($row[0]) : strlen($row);
         $this->width = max($this->width, $length);
@@ -96,9 +124,10 @@ class InstaBench {
     }
 
     private function stop() {
-        $this->lap = round((array_sum(explode(' ',
-            microtime()))-$this->start)*1000, 0);
-        return $this->lap;
+        $stop = round((array_sum(explode(' ',
+            microtime())) - $this->start) * 1000, 0);
+        $usage = memory_get_usage() - $this->mem_usage;
+        return array("time" => $stop, "mem" => $usage);
     }
 }
 
@@ -112,4 +141,12 @@ function bail($errno, $errstr, $errfile, $errline) {
     $func = $backtrace[0]["args"][4]["func"];
     printf("Note: error while adding %s, skipping\n", $func);
     return true;
+}
+
+// Chris Jester-Young's byteformatter
+function formatBytes($size, $precision = 2) {
+    $base = log($size) / log(1024);
+    $suffixes = array('b', 'k', 'M', 'G', 'T');
+
+    return round(pow(1024, $base - floor($base)), $precision) . $suffixes[floor($base)];
 }
