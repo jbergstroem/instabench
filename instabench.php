@@ -54,18 +54,21 @@ class InstaBench {
          * Add each result to array with proper padding and a comparision
          * against baseline (first function added)
          */
-        for($i=0; $i < count($this->members); $i++):
+        $num = count($this->members);
+        for($i = 0; $i < $num; $i++):
             $factor = round(($this->results[0] / $this->results[$i]), 1);
             $pad = ($this->width - strlen($this->members[$i][0])) + 1;
-            array_push($output, sprintf("%s%s: %sms (%s)",
+            $comparison = ($i == 0 ? "baseline" : sprintf("%.1fx %s",
+                $factor,
+                $factor < 1 ? "slower" : ($factor === 1.0 ?
+                    "equal" : "faster")
+            ));
+
+            array_push($output, sprintf("%s%s: %sms %s",
                 str_repeat(" ", $pad),
                 $this->members[$i][0],
                 $this->results[$i],
-                $i == 0 ? "baseline" : sprintf("%.1fx %s",
-                    $factor,
-                    $factor < 1 ? "slower" : ($factor === 1.0 ?
-                        "equal" : "faster")
-                )
+                $num > 1 ? sprintf("(%s)",$comparison) : ""
             ));
         endfor;
 
