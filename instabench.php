@@ -23,8 +23,11 @@ class InstaBench {
      * Note: Read up on how to format input: php.net/call_user_func_array
      */
     public function add($func, $args) {
-        call_user_func_array($func, $args);
-        array_push($this->members, array($func, $args));
+        set_error_handler("bail");
+        $ret = call_user_func_array($func, $args);
+        if(!is_null($ret) && $ret)
+            array_push($this->members, array($func, $args));
+        restore_error_handler();
     }
 
     public function run() {
@@ -97,4 +100,16 @@ class InstaBench {
             microtime()))-$this->start)*1000, 0);
         return $this->lap;
     }
+}
+
+/*
+ * Intercept errors while adding functions to benchmark
+ * This aids you in not displaying the error messages $iterations times
+ */
+function bail($errno, $errstr, $errfile, $errline) {
+    $backtrace = debug_backtrace();
+    // nice api
+    $func = $backtrace[0]["args"][4]["func"];
+    printf("Note: error while adding %s, skipping\n", $func);
+    return true;
 }
